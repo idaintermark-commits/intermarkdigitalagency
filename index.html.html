@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>InterMark — Digital Performance Agency</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Epilogue:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#080808;
+  --white:#F5F5F0;
+  --lime:#C8FF00;
+  --lime-dark:#A8D900;
+  --grey:#1A1A1A;
+  --grey-2:#242424;
+  --muted:#888;
+  --border:rgba(245,245,240,0.08);
+  --border-light:rgba(245,245,240,0.15);
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Epilogue',sans-serif;
+  background:var(--black);color:var(--white);
+  line-height:1.6;overflow-x:hidden;
+  cursor:none;
+}
+
+/* CUSTOM CURSOR */
+.cursor{
+  width:12px;height:12px;
+  background:var(--lime);border-radius:50%;
+  position:fixed;pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:transform .1s ease,width .2s,height .2s;
+  mix-blend-mode:difference;
+}
+.cursor-ring{
+  width:40px;height:40px;
+  border:1px solid rgba(200,255,0,.4);
+  border-radius:50%;
+  position:fixed;pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:transform .15s ease,width .3s,height .3s,border-color .3s;
+}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;
+  padding:1.4rem 3rem;
+  display:flex;align-items:center;justify-content:space-between;
+  z-index:100;
+  border-bottom:1px solid var(--border);
+  background:rgba(8,8,8,0.92);
+  backdrop-filter:blur(20px);
+}
+.logo{
+  font-family:'Syne',sans-serif;font-size:1.15rem;font-weight:800;
+  color:var(--white);text-decoration:none;letter-spacing:-.5px;
+  text-transform:uppercase;
+}
+.logo span{color:var(--lime)}
+.nav-center{
+  display:flex;gap:2.8rem;list-style:none;
+  position:absolute;left:50%;transform:translateX(-50%);
+}
+.nav-center a{
+  color:var(--muted);text-decoration:none;
+  font-size:.78rem;font-weight:500;letter-spacing:.8px;
+  text-transform:uppercase;transition:color .2s;
+}
+.nav-center a:hover{color:var(--white)}
+.nav-cta{
+  font-family:'Syne',sans-serif;
+  background:var(--lime);color:var(--black);
+  padding:.55rem 1.4rem;border-radius:2px;
+  text-decoration:none;font-size:.75rem;font-weight:700;
+  letter-spacing:1px;text-transform:uppercase;
+  transition:all .2s;
+}
+.nav-cta:hover{background:var(--lime-dark);transform:translateY(-1px)}
+
+/* HERO */
+.hero{
+  min-height:100vh;
+  padding:10rem 3rem 5rem;
+  display:flex;flex-direction:column;justify-content:space-between;
+  position:relative;overflow:hidden;
+  border-bottom:1px solid var(--border);
+}
+.hero-noise{
+  position:absolute;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;opacity:.4;
+}
+.hero-grid-line{
+  position:absolute;top:0;bottom:0;
+  width:1px;background:var(--border);
+}
+.hero-grid-line:nth-child(2){left:25%}
+.hero-grid-line:nth-child(3){left:50%}
+.hero-grid-line:nth-child(4){left:75%}
+
+.hero-top{position:relative;z-index:1}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:8px;
+  border:1px solid var(--border-light);
+  padding:.35rem 1rem;border-radius:2px;
+  font-size:.7rem;font-weight:500;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--muted);
+  margin-bottom:3rem;
+  animation:fadeIn .8s ease both;
+}
+.hero-badge-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--lime);
+  animation:blink 2s infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+
+.hero h1{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(4rem,9vw,9rem);
+  font-weight:800;line-height:.92;
+  letter-spacing:-4px;text-transform:uppercase;
+  max-width:1100px;
+  animation:slideUp .9s ease both;
+}
+.hero h1 .line-2{
+  display:block;
+  -webkit-text-stroke:1px rgba(245,245,240,.3);
+  color:transparent;
+  transition:color .3s,-webkit-text-stroke .3s;
+}
+.hero h1 .line-2:hover{
+  color:var(--white);
+  -webkit-text-stroke:1px transparent;
+}
+.hero h1 .accent{color:var(--lime)}
+
+.hero-bottom{
+  display:flex;justify-content:space-between;
+  align-items:flex-end;position:relative;z-index:1;
+  margin-top:4rem;
+  animation:fadeIn 1s .3s ease both;
+}
+.hero-desc{
+  max-width:380px;
+  font-size:1rem;color:var(--muted);
+  line-height:1.75;font-weight:300;font-style:italic;
+}
+.hero-actions{display:flex;flex-direction:column;align-items:flex-end;gap:1rem}
+.btn-lime{
+  font-family:'Syne',sans-serif;
+  background:var(--lime);color:var(--black);
+  padding:1rem 2.5rem;border-radius:2px;
+  text-decoration:none;font-weight:700;font-size:.85rem;
+  letter-spacing:1px;text-transform:uppercase;
+  transition:all .25s;display:inline-flex;align-items:center;gap:10px;
+}
+.btn-lime:hover{background:var(--lime-dark);transform:translateY(-3px);box-shadow:0 16px 40px rgba(200,255,0,.2)}
+.btn-ghost{
+  color:var(--muted);text-decoration:none;font-size:.78rem;
+  font-weight:500;letter-spacing:.8px;text-transform:uppercase;
+  display:flex;align-items:center;gap:6px;
+  border-bottom:1px solid var(--border-light);padding-bottom:3px;
+  transition:all .2s;
+}
+.btn-ghost:hover{color:var(--white);border-color:var(--muted)}
+.hero-scroll{
+  font-size:.68rem;letter-spacing:2px;text-transform:uppercase;
+  color:var(--muted);display:flex;align-items:center;gap:10px;
+  align-self:flex-end;
+}
+.hero-scroll::before{
+  content:'';width:40px;height:1px;background:var(--border-light);
+  display:block;
+}
+
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+
+/* TICKER */
+.ticker{
+  background:var(--lime);
+  padding:.75rem 0;overflow:hidden;
+  border-bottom:1px solid var(--border);
+}
+.ticker-track{
+  display:flex;gap:0;
+  animation:ticker 20s linear infinite;
+  white-space:nowrap;
+}
+.ticker-item{
+  font-family:'Syne',sans-serif;
+  font-size:.72rem;font-weight:700;
+  color:var(--black);letter-spacing:2px;
+  text-transform:uppercase;padding:0 2rem;
+  display:flex;align-items:center;gap:2rem;flex-shrink:0;
+}
+.ticker-item::after{content:'✦';font-size:.5rem}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* NUMBERS */
+.numbers{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  border-bottom:1px solid var(--border);
+}
+.num-item{
+  padding:3.5rem 3rem;
+  border-right:1px solid var(--border);
+  transition:background .3s;
+}
+.num-item:last-child{border-right:none}
+.num-item:hover{background:var(--grey)}
+.num-val{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(2.5rem,5vw,4.5rem);
+  font-weight:800;color:var(--white);
+  line-height:1;letter-spacing:-2px;margin-bottom:.5rem;
+}
+.num-val span{color:var(--lime)}
+.num-label{
+  font-size:.72rem;color:var(--muted);
+  text-transform:uppercase;letter-spacing:1.5px;font-weight:500;
+}
+
+/* SERVICES */
+.services{border-bottom:1px solid var(--border)}
+.sec-header{
+  padding:5rem 3rem 3rem;
+  display:flex;justify-content:space-between;align-items:flex-end;
+  border-bottom:1px solid var(--border);
+}
+.sec-label{
+  font-family:'Syne',sans-serif;
+  font-size:.7rem;font-weight:700;letter-spacing:2.5px;
+  text-transform:uppercase;color:var(--lime);margin-bottom:.8rem;
+}
+.sec-title{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(2rem,4vw,3.5rem);
+  font-weight:800;letter-spacing:-2px;text-transform:uppercase;
+  line-height:1;
+}
+.sec-desc{
+  font-size:.95rem;color:var(--muted);
+  max-width:380px;line-height:1.75;font-weight:300;font-style:italic;
+  text-align:right;
+}
+.svc-list{}
+.svc-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:2rem 3rem;
+  border-bottom:1px solid var(--border);
+  transition:all .25s;position:relative;overflow:hidden;
+  cursor:default;
+}
+.svc-row::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;
+  width:0;background:var(--lime);transition:width .3s ease;
+}
+.svc-row:hover::before{width:4px}
+.svc-row:hover{background:var(--grey);padding-left:3.8rem}
+.svc-row:hover .svc-num{color:var(--lime)}
+.svc-row:hover .svc-name{color:var(--white)}
+.svc-left{display:flex;align-items:center;gap:2rem}
+.svc-num{
+  font-family:'Syne',sans-serif;
+  font-size:.72rem;font-weight:700;
+  color:var(--muted);letter-spacing:1px;
+  width:2rem;transition:color .25s;
+}
+.svc-name{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(1rem,2.2vw,1.6rem);
+  font-weight:700;letter-spacing:-0.5px;
+  color:var(--white);transition:color .25s;
+  text-transform:uppercase;
+}
+.svc-tag{
+  font-size:.68rem;color:var(--muted);
+  letter-spacing:1px;text-transform:uppercase;font-weight:500;
+}
+.svc-arrow{
+  font-size:1.2rem;color:var(--border-light);transition:all .25s;
+}
+.svc-row:hover .svc-arrow{color:var(--lime);transform:translateX(4px)}
+
+/* WORK */
+.work{border-bottom:1px solid var(--border)}
+.work-header{
+  padding:5rem 3rem 3rem;
+  display:flex;justify-content:space-between;align-items:flex-end;
+  border-bottom:1px solid var(--border);
+}
+/* LOCATION GROUPS */
+.loc-group{border-bottom:1px solid var(--border)}
+.loc-group:last-child{border-bottom:none}
+.loc-header{
+  padding:1.8rem 3rem;
+  display:flex;align-items:center;gap:1.5rem;
+  border-bottom:1px solid var(--border);
+  background:var(--grey);
+}
+.loc-pin{
+  font-family:'Syne',sans-serif;font-size:.65rem;font-weight:700;
+  letter-spacing:2px;text-transform:uppercase;
+  color:var(--black);background:var(--lime);
+  padding:.3rem .9rem;border-radius:2px;
+}
+.loc-name{
+  font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;
+  color:var(--white);text-transform:uppercase;letter-spacing:-.3px;
+}
+.loc-count{
+  font-size:.7rem;color:var(--muted);letter-spacing:1px;
+  text-transform:uppercase;margin-left:auto;
+}
+.work-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+}
+.work-card{
+  border-right:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  overflow:hidden;position:relative;
+  transition:all .3s;
+}
+.work-card:last-child,.work-card:nth-child(3n){border-right:none}
+.loc-group:last-child .work-card{border-bottom:none}
+.work-grid-2col{grid-template-columns:repeat(2,1fr)}
+.work-grid-1col{grid-template-columns:1fr}
+.work-img{
+  height:180px;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;
+  font-size:3.5rem;font-weight:800;
+  letter-spacing:-3px;text-transform:uppercase;
+  color:rgba(255,255,255,.15);
+  position:relative;transition:all .3s;
+}
+.work-card:hover .work-img{color:rgba(255,255,255,.28)}
+.work-card:hover{background:var(--grey)}
+.work-body{padding:1.8rem 2rem 2.2rem}
+.work-sector{
+  font-size:.65rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:2px;color:var(--lime);margin-bottom:.5rem;
+}
+.work-card h3{
+  font-family:'Syne',sans-serif;
+  font-size:1.25rem;font-weight:800;
+  color:var(--white);margin-bottom:1rem;
+  letter-spacing:-.5px;text-transform:uppercase;
+}
+.work-tags{display:flex;flex-wrap:wrap;gap:.4rem}
+.wtag{
+  background:var(--grey-2);color:var(--muted);
+  padding:.25rem .75rem;border-radius:2px;
+  font-size:.65rem;font-weight:500;letter-spacing:.5px;
+  text-transform:uppercase;
+}
+.wtag-live{
+  background:rgba(200,255,0,.1);color:var(--lime);
+  padding:.25rem .75rem;border-radius:2px;
+  font-size:.65rem;font-weight:700;letter-spacing:.5px;
+  text-transform:uppercase;border:1px solid rgba(200,255,0,.2);
+}
+
+/* WHY */
+.why{
+  padding:6rem 3rem;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:6rem;align-items:start;
+  border-bottom:1px solid var(--border);
+}
+.why-left .sec-title{margin-bottom:1.5rem}
+.why-left p{
+  font-size:1rem;color:var(--muted);
+  line-height:1.8;font-weight:300;font-style:italic;max-width:400px;
+}
+.why-right{}
+.why-item{
+  padding:2rem 0;border-bottom:1px solid var(--border);
+  display:flex;gap:2rem;align-items:flex-start;
+}
+.why-item:first-child{border-top:1px solid var(--border)}
+.why-num{
+  font-family:'Syne',sans-serif;
+  font-size:.72rem;font-weight:700;
+  color:var(--lime);letter-spacing:1px;
+  flex-shrink:0;padding-top:3px;
+}
+.why-item h3{
+  font-family:'Syne',sans-serif;
+  font-size:1rem;font-weight:700;
+  color:var(--white);margin-bottom:.4rem;
+  text-transform:uppercase;letter-spacing:-.2px;
+}
+.why-item p{font-size:.85rem;color:var(--muted);line-height:1.7;font-weight:300}
+
+/* PACKAGES */
+.packages{border-bottom:1px solid var(--border)}
+.pkg-header{
+  padding:5rem 3rem 3rem;
+  border-bottom:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:flex-end;
+}
+.pkg-grid{display:grid;grid-template-columns:repeat(5,1fr)}
+.pkg{
+  padding:2.5rem 2rem;
+  border-right:1px solid var(--border);
+  transition:background .25s;
+}
+.pkg:last-child{border-right:none}
+.pkg:hover{background:var(--grey)}
+.pkg.star{background:var(--lime);border-color:var(--lime)}
+.pkg.star:hover{background:var(--lime-dark)}
+.pkg-name{
+  font-family:'Syne',sans-serif;
+  font-size:1.5rem;font-weight:800;
+  color:var(--white);margin-bottom:.3rem;
+  text-transform:uppercase;letter-spacing:-1px;
+}
+.pkg.star .pkg-name{color:var(--black)}
+.pkg-for{
+  font-size:.65rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:1.5px;color:var(--muted);margin-bottom:1.2rem;
+}
+.pkg.star .pkg-for{color:rgba(0,0,0,.5)}
+.pkg-desc{
+  font-size:.82rem;color:var(--muted);
+  line-height:1.6;margin-bottom:1.8rem;font-weight:300;
+}
+.pkg.star .pkg-desc{color:rgba(0,0,0,.6)}
+.pkg-btn{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:'Syne',sans-serif;font-size:.7rem;font-weight:700;
+  color:var(--muted);text-decoration:none;letter-spacing:1px;text-transform:uppercase;
+  transition:color .2s;
+}
+.pkg.star .pkg-btn{color:var(--black)}
+.pkg-btn:hover{color:var(--white)}
+.pkg.star .pkg-btn:hover{color:var(--grey)}
+
+/* TESTIMONIALS */
+.testimonials{border-bottom:1px solid var(--border)}
+.t-header{
+  padding:5rem 3rem 3rem;
+  border-bottom:1px solid var(--border);
+}
+.t-grid{display:grid;grid-template-columns:repeat(3,1fr)}
+.t-card{
+  padding:2.5rem;border-right:1px solid var(--border);
+  transition:background .25s;
+}
+.t-card:last-child{border-right:none}
+.t-card:hover{background:var(--grey)}
+.t-mark{
+  font-family:'Syne',sans-serif;
+  font-size:4rem;color:var(--lime);
+  line-height:.8;margin-bottom:1rem;font-weight:800;
+}
+.t-text{
+  font-size:.95rem;color:var(--muted);
+  line-height:1.75;font-style:italic;
+  font-weight:300;margin-bottom:1.8rem;
+}
+.t-from strong{
+  font-family:'Syne',sans-serif;
+  display:block;font-size:.82rem;font-weight:700;
+  color:var(--white);text-transform:uppercase;letter-spacing:.5px;
+  margin-bottom:.2rem;
+}
+.t-from span{font-size:.75rem;color:var(--muted);letter-spacing:.5px}
+
+/* CTA BLOCK */
+.cta-block{
+  padding:8rem 3rem;text-align:center;
+  position:relative;overflow:hidden;
+  border-bottom:1px solid var(--border);
+}
+.cta-bg-text{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  font-family:'Syne',sans-serif;
+  font-size:22vw;font-weight:800;
+  color:var(--grey);white-space:nowrap;
+  pointer-events:none;letter-spacing:-8px;text-transform:uppercase;
+  line-height:1;
+}
+.cta-block h2{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(2.5rem,6vw,6rem);
+  font-weight:800;text-transform:uppercase;
+  letter-spacing:-3px;line-height:.95;
+  margin-bottom:1.5rem;position:relative;z-index:1;
+}
+.cta-block h2 span{color:var(--lime)}
+.cta-block p{
+  font-size:1rem;color:var(--muted);
+  max-width:420px;margin:0 auto 3rem;
+  line-height:1.75;font-weight:300;font-style:italic;
+  position:relative;z-index:1;
+}
+
+/* FOOTER */
+footer{
+  padding:4rem 3rem 2rem;
+  border-top:1px solid var(--border);
+}
+.ft-top{
+  display:grid;grid-template-columns:2fr 1fr 1fr 1fr;
+  gap:3rem;margin-bottom:3rem;
+}
+.ft-logo{
+  font-family:'Syne',sans-serif;font-size:1.2rem;font-weight:800;
+  color:var(--white);margin-bottom:.8rem;text-transform:uppercase;letter-spacing:-0.5px;
+}
+.ft-logo span{color:var(--lime)}
+.ft-desc{font-size:.84rem;color:var(--muted);line-height:1.75;max-width:260px;margin-bottom:1.5rem;font-weight:300}
+.ft-socials{display:flex;flex-wrap:wrap;gap:.5rem}
+.ft-soc{
+  color:var(--muted);font-size:.7rem;text-decoration:none;
+  padding:.35rem .8rem;border:1px solid var(--border-light);
+  border-radius:2px;transition:all .2s;font-weight:500;
+  letter-spacing:.5px;text-transform:uppercase;
+}
+.ft-soc:hover{color:var(--white);border-color:var(--muted)}
+.ft-col h4{
+  font-family:'Syne',sans-serif;
+  font-size:.65rem;font-weight:700;color:var(--muted);
+  text-transform:uppercase;letter-spacing:2px;margin-bottom:1.2rem;
+}
+.ft-col ul{list-style:none}
+.ft-col li{margin-bottom:.5rem}
+.ft-col a{color:var(--muted);text-decoration:none;font-size:.84rem;transition:color .2s;font-weight:300}
+.ft-col a:hover{color:var(--white)}
+.ft-bottom{
+  border-top:1px solid var(--border);padding-top:1.5rem;
+  display:flex;justify-content:space-between;
+  font-size:.72rem;color:var(--muted);flex-wrap:wrap;gap:.5rem;
+  letter-spacing:.5px;text-transform:uppercase;
+}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav{padding:1rem 1.5rem}
+  .nav-center{display:none}
+  .hero,.services,.work,.packages,.testimonials,.cta-block,footer{padding-left:1.5rem;padding-right:1.5rem}
+  .hero h1{letter-spacing:-2px}
+  .numbers{grid-template-columns:repeat(2,1fr)}
+  .work-grid{grid-template-columns:1fr}
+  .work-card{border-right:none}
+  .work-card:nth-child(3){border-bottom:1px solid var(--border)}
+  .why{grid-template-columns:1fr;gap:3rem;padding:4rem 1.5rem}
+  .pkg-grid{grid-template-columns:repeat(2,1fr)}
+  .pkg{border-bottom:1px solid var(--border)}
+  .t-grid{grid-template-columns:1fr}
+  .t-card{border-right:none;border-bottom:1px solid var(--border)}
+  .ft-top{grid-template-columns:1fr;gap:2rem}
+  .sec-header,.work-header,.pkg-header{flex-direction:column;gap:1rem;align-items:flex-start}
+  .sec-desc{text-align:left}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="logo">Inter<span>Mark</span></a>
+  <ul class="nav-center">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#packages">Packages</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Get Started →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-noise"></div>
+  <div class="hero-grid-line"></div>
+  <div class="hero-grid-line"></div>
+  <div class="hero-grid-line"></div>
+
+  <div class="hero-top">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      Digital Performance Agency · India
+    </div>
+    <h1>
+      We Make<br>
+      <span class="line-2">Brands</span><br>
+      <span class="accent">Perform.</span>
+    </h1>
+  </div>
+
+  <div class="hero-bottom">
+    <p class="hero-desc">
+      Full-stack digital marketing — websites, ads, social media, SEO, and brand identity — for businesses ready to grow at scale across India.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-lime">Start a Project →</a>
+      <a href="#work" class="btn-ghost">View Our Work ↓</a>
+    </div>
+    <div class="hero-scroll">Scroll to explore</div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item">Web Design</span>
+    <span class="ticker-item">Meta Ads</span>
+    <span class="ticker-item">Google Ads</span>
+    <span class="ticker-item">Social Media</span>
+    <span class="ticker-item">SEO</span>
+    <span class="ticker-item">Brand Identity</span>
+    <span class="ticker-item">Digital Security</span>
+    <span class="ticker-item">Strategy</span>
+    <span class="ticker-item">Marketplace</span>
+    <span class="ticker-item">Web Design</span>
+    <span class="ticker-item">Meta Ads</span>
+    <span class="ticker-item">Google Ads</span>
+    <span class="ticker-item">Social Media</span>
+    <span class="ticker-item">SEO</span>
+    <span class="ticker-item">Brand Identity</span>
+    <span class="ticker-item">Digital Security</span>
+    <span class="ticker-item">Strategy</span>
+    <span class="ticker-item">Marketplace</span>
+  </div>
+</div>
+
+<!-- NUMBERS -->
+<div class="numbers">
+  <div class="num-item">
+    <div class="num-val">7<span>+</span></div>
+    <div class="num-label">Active Clients</div>
+  </div>
+  <div class="num-item">
+    <div class="num-val">9<span>+</span></div>
+    <div class="num-label">Services</div>
+  </div>
+  <div class="num-item">
+    <div class="num-val">90<span>d</span></div>
+    <div class="num-label">Campaigns Running</div>
+  </div>
+  <div class="num-item">
+    <div class="num-val">∞</div>
+    <div class="num-label">Growth Potential</div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="sec-header">
+    <div>
+      <div class="sec-label">What We Do</div>
+      <h2 class="sec-title">Our<br>Services</h2>
+    </div>
+    <p class="sec-desc">Every service a brand needs to build a formidable digital presence — from zero to scale.</p>
+  </div>
+  <div class="svc-list">
+    <div class="svc-row"><div class="svc-left"><span class="svc-num">01</span><span class="svc-name">Website Design & Development</span></div><span class="svc-tag">Web · UX · Integration</span><span class="svc-arrow">→</span></div>
+    <div class="svc-row"><div class="svc-left"><span class="svc-num">02</span><span class="svc-name">Google Business Profile</span></div><span class="svc-tag">Local SEO · Maps</span><span class="svc-arrow">→</span></div>
+    <div class="svc-row"><div class="svc-left"><span class="svc-num">03</span><span class="svc-name">Social Media Marketing</span></div><span class="svc-tag">Instagram · Facebook · Content</span><span class="svc-arrow">→</span></div>
+    <div class="svc-row"><div class="svc-left"><span class="svc-num">04</span><span class="svc-name">Meta & Google Ads</span></div><span class="svc-tag">Performance · ROI · Scale</span><span class="svc-arrow">→</span></div>
+    <div class="svc-row"><div class="svc-left"><span class="svc-num">05</span><span class="svc-name">Graphic Design</span></div><span class="svc-tag">Logo · Print · Brand</span><span class="svc-arrow">→</span></div>
+    <div class="svc-row"><div class="svc-left"><span class="svc-num">06</span><span class="svc-name">SEO-Ready Content</span></div><span class="svc-tag">Search · Rankings · Traffic</span><span class="svc-arrow">→</span></div>
+    <div class="svc-row"><div class="svc-left"><span class="svc-num">07</span><span class="svc-name">Marketplace Onboarding</span></div><span class="svc-tag">Amazon · eCommerce</span><span class="svc-arrow">→</span></div>
+    <div class="svc-row"><div class="svc-left"><span class="svc-num">08</span><span class="svc-name">Research-Based Strategy</span></div><span class="svc-tag">Data · Insights · Growth</span><span class="svc-arrow">→</span></div>
+    <div class="svc-row"><div class="svc-left"><span class="svc-num">09</span><span class="svc-name">Basic Digital Security</span></div><span class="svc-tag">Protect · Secure · Shield</span><span class="svc-arrow">→</span></div>
+  </div>
+</section>
+
+<!-- WORK -->
+<section class="work" id="work">
+  <div class="work-header">
+    <div>
+      <div class="sec-label">Selected Work</div>
+      <h2 class="sec-title">Where We<br>Operate</h2>
+    </div>
+    <p class="sec-desc">From the Himalayas to the Bay of Bengal to the USA — brands we've built across geographies.</p>
+  </div>
+
+  <!-- DEHRADUN -->
+  <div class="loc-group">
+    <div class="loc-header">
+      <span class="loc-pin">📍 India</span>
+      <span class="loc-name">Dehradun, Uttarakhand</span>
+      <span class="loc-count">4 Clients</span>
+    </div>
+    <div class="work-grid">
+      <div class="work-card">
+        <div class="work-img" style="background:linear-gradient(135deg,#0D1B2A,#1B2838)">KYTES</div>
+        <div class="work-body">
+          <div class="work-sector">F&B · Restaurant</div>
+          <h3>Kytes Restaurant</h3>
+          <div class="work-tags">
+            <span class="wtag">Logo</span><span class="wtag">Website</span><span class="wtag">Social</span><span class="wtag">Menu</span><span class="wtag-live">Meta Ads</span><span class="wtag-live">120-Day SMM</span>
+          </div>
+        </div>
+      </div>
+      <div class="work-card">
+        <div class="work-img" style="background:linear-gradient(135deg,#0B1E13,#1A3328)">DOON</div>
+        <div class="work-body">
+          <div class="work-sector">Hospitality · Wellness</div>
+          <h3>Doon Anandam</h3>
+          <div class="work-tags">
+            <span class="wtag">Logo</span><span class="wtag">Website</span><span class="wtag">Brochure</span><span class="wtag">Social</span><span class="wtag-live">Meta Ads</span><span class="wtag-live">120-Day SMM</span>
+          </div>
+        </div>
+      </div>
+      <div class="work-card">
+        <div class="work-img" style="background:linear-gradient(135deg,#1A0A00,#2E1200)">GOTHIC</div>
+        <div class="work-body">
+          <div class="work-sector">F&B · Restaurant</div>
+          <h3>Gothic Grill</h3>
+          <div class="work-tags">
+            <span class="wtag">Logo</span><span class="wtag">Website</span><span class="wtag">Menu</span><span class="wtag">Posters</span><span class="wtag-live">Meta Ads</span><span class="wtag-live">120-Day SMM</span>
+          </div>
+        </div>
+      </div>
+      <div class="work-card">
+        <div class="work-img" style="background:linear-gradient(135deg,#0A1A0A,#162616)">ELITE</div>
+        <div class="work-body">
+          <div class="work-sector">Real Estate · Hotels · Marketing</div>
+          <h3>Elite Hospitality</h3>
+          <div class="work-tags">
+            <span class="wtag">Logo</span><span class="wtag">Website</span><span class="wtag">Social</span><span class="wtag">Showreel</span><span class="wtag-live">Meta Ads</span><span class="wtag-live">120-Day SMM</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KOLKATA -->
+  <div class="loc-group">
+    <div class="loc-header">
+      <span class="loc-pin">📍 India</span>
+      <span class="loc-name">Kolkata, West Bengal</span>
+      <span class="loc-count">1 Client</span>
+    </div>
+    <div class="work-grid work-grid-1col">
+      <div class="work-card">
+        <div class="work-img" style="background:linear-gradient(135deg,#1A1200,#332400)">LAW</div>
+        <div class="work-body">
+          <div class="work-sector">Corporate Law · Legal Services</div>
+          <h3>Advocate Sohan Lal</h3>
+          <div class="work-tags">
+            <span class="wtag">Logo</span><span class="wtag">Website</span><span class="wtag">GBP</span><span class="wtag">LinkedIn Optimisation</span><span class="wtag">Social</span><span class="wtag">Print Design</span><span class="wtag-live">Meta & Google Ads</span><span class="wtag-live">Reputation Mgmt</span><span class="wtag-live">SEO Content</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- USA -->
+  <div class="loc-group">
+    <div class="loc-header">
+      <span class="loc-pin">🌐 USA</span>
+      <span class="loc-name">United States of America</span>
+      <span class="loc-count">2 Clients</span>
+    </div>
+    <div class="work-grid work-grid-2col">
+      <div class="work-card">
+        <div class="work-img" style="background:linear-gradient(135deg,#001A33,#003366)">DR</div>
+        <div class="work-body">
+          <div class="work-sector">Medical · Healthcare</div>
+          <h3>Dr. Rohit Jain</h3>
+          <div class="work-tags">
+            <span class="wtag">Logo</span><span class="wtag">Website</span><span class="wtag">GBP</span><span class="wtag">Social</span><span class="wtag">Print Design</span><span class="wtag-live">Meta & Google Ads</span><span class="wtag-live">Reputation Mgmt</span><span class="wtag-live">SEO Content</span>
+          </div>
+        </div>
+      </div>
+      <div class="work-card">
+        <div class="work-img" style="background:linear-gradient(135deg,#001A1A,#003333)">CA</div>
+        <div class="work-body">
+          <div class="work-sector">Finance · Chartered Accountant</div>
+          <h3>CA Ms. Priya Poddar</h3>
+          <div class="work-tags">
+            <span class="wtag">Logo</span><span class="wtag">Website</span><span class="wtag">GBP</span><span class="wtag">LinkedIn Optimisation</span><span class="wtag">Social</span><span class="wtag-live">Meta & Google Ads</span><span class="wtag-live">Reputation Mgmt</span><span class="wtag-live">SEO Content</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- WHY -->
+<section class="why">
+  <div class="why-left">
+    <div class="sec-label">Why InterMark</div>
+    <h2 class="sec-title">Built<br>Different.</h2>
+    <p>We're not a bloated agency with layers of account managers. We're a focused, hungry team that executes fast and measures everything.</p>
+  </div>
+  <div class="why-right">
+    <div class="why-item">
+      <span class="why-num">01</span>
+      <div><h3>Full-Stack Digital</h3><p>Logo to website to ads to social — one team, one relationship, no handoffs. Every touchpoint owned and optimised by us.</p></div>
+    </div>
+    <div class="why-item">
+      <span class="why-num">02</span>
+      <div><h3>Performance Over Vanity</h3><p>We don't sell you likes and followers. We track real metrics — leads, conversions, footfall, revenue. Everything ties to business outcomes.</p></div>
+    </div>
+    <div class="why-item">
+      <span class="why-num">03</span>
+      <div><h3>Lean & Fast-Moving</h3><p>No bureaucracy. No waiting weeks for a simple post. When you need to move fast, we move fast.</p></div>
+    </div>
+    <div class="why-item">
+      <span class="why-num">04</span>
+      <div><h3>Radical Transparency</h3><p>You'll always know exactly what's running, what's performing, and what we're doing next. No black boxes.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGES -->
+<section class="packages" id="packages">
+  <div class="pkg-header">
+    <div>
+      <div class="sec-label">Packages</div>
+      <h2 class="sec-title">Choose<br>Your Plan</h2>
+    </div>
+    <p class="sec-desc">Every package is tailored to where you are and where you want to go. Contact us for exact inclusions.</p>
+  </div>
+  <div class="pkg-grid">
+    <div class="pkg"><div class="pkg-name">Active</div><div class="pkg-for">Brand Launch</div><div class="pkg-desc">Logo, website, and basic social setup — everything to launch your digital identity.</div><a href="#contact" class="pkg-btn">Enquire →</a></div>
+    <div class="pkg"><div class="pkg-name">Pro</div><div class="pkg-for">Online Presence</div><div class="pkg-desc">Build a consistent online presence with ongoing content and audience engagement.</div><a href="#contact" class="pkg-btn">Enquire →</a></div>
+    <div class="pkg star"><div class="pkg-name">Kinetic</div><div class="pkg-for">Most Popular</div><div class="pkg-desc">Targeted ad campaigns + strong social presence. The growth engine for ambitious brands.</div><a href="#contact" class="pkg-btn">Enquire →</a></div>
+    <div class="pkg"><div class="pkg-name">Thrive</div><div class="pkg-for">Sales & Loyalty</div><div class="pkg-desc">Convert and retain customers through smart full-funnel digital marketing.</div><a href="#contact" class="pkg-btn">Enquire →</a></div>
+    <div class="pkg"><div class="pkg-name">Elevate</div><div class="pkg-for">Full Scale</div><div class="pkg-desc">Maximum visibility, customer acquisition, and brand authority at scale.</div><a href="#contact" class="pkg-btn">Enquire →</a></div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="t-header">
+    <div class="sec-label">Client Voices</div>
+    <h2 class="sec-title">What They<br>Say</h2>
+  </div>
+  <div class="t-grid">
+    <div class="t-card">
+      <div class="t-mark">"</div>
+      <p class="t-text">InterMark built our entire digital presence from scratch — website, Instagram, Facebook, logo. Exactly what we needed, delivered without fuss.</p>
+      <div class="t-from"><strong>Kytes Restaurant</strong><span>F&B · India</span></div>
+    </div>
+    <div class="t-card">
+      <div class="t-mark">"</div>
+      <p class="t-text">The team is responsive, creative, and genuinely invested in our growth. Our Meta ads are live and already showing real results.</p>
+      <div class="t-from"><strong>Doon Anandam</strong><span>Hospitality · India</span></div>
+    </div>
+    <div class="t-card">
+      <div class="t-mark">"</div>
+      <p class="t-text">The posters, standees and website gave Gothic Grill a real identity online. We finally look like the professional brand we always were.</p>
+      <div class="t-from"><strong>Gothic Grill</strong><span>F&B · India</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-block" id="contact">
+  <div class="cta-bg-text">IDA</div>
+  <h2>Ready to<br><span>Perform?</span></h2>
+  <p>Book a free strategy call. No pitch decks, no pressure — just a direct conversation about your brand and how we make it grow.</p>
+  <a href="https://www.intermarkdigitalagency.com/mycontact" class="btn-lime" style="position:relative;z-index:1">Book Free Strategy Call →</a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-top">
+    <div>
+      <div class="ft-logo">Inter<span>Mark</span></div>
+      <p class="ft-desc">A full-stack digital performance agency helping brands build powerful online presences through websites, ads, social media, and strategy.</p>
+      <div class="ft-socials">
+        <a href="https://www.instagram.com/intermark.ida/" class="ft-soc" target="_blank">IG</a>
+        <a href="https://www.facebook.com/profile.php?id=61576208676422" class="ft-soc" target="_blank">FB</a>
+        <a href="https://www.linkedin.com/in/intermarkdigitalagency/" class="ft-soc" target="_blank">LI</a>
+        <a href="https://www.youtube.com/@InterMarkDigitalAgency" class="ft-soc" target="_blank">YT</a>
+      </div>
+    </div>
+    <div class="ft-col">
+      <h4>Services</h4>
+      <ul>
+        <li><a href="#services">Web Design</a></li>
+        <li><a href="#services">Social Media</a></li>
+        <li><a href="#services">Meta & Google Ads</a></li>
+        <li><a href="#services">Graphic Design</a></li>
+        <li><a href="#services">SEO Content</a></li>
+        <li><a href="#services">Digital Security</a></li>
+      </ul>
+    </div>
+    <div class="ft-col">
+      <h4>Company</h4>
+      <ul>
+        <li><a href="#work">Our Work</a></li>
+        <li><a href="#packages">Packages</a></li>
+        <li><a href="#contact">Strategy Call</a></li>
+        <li><a href="https://www.intermarkdigitalagency.com/blog">Blog</a></li>
+      </ul>
+    </div>
+    <div class="ft-col">
+      <h4>Connect</h4>
+      <ul>
+        <li><a href="https://www.instagram.com/intermark.ida/" target="_blank">Instagram</a></li>
+        <li><a href="https://www.facebook.com/profile.php?id=61576208676422" target="_blank">Facebook</a></li>
+        <li><a href="https://www.linkedin.com/in/intermarkdigitalagency/" target="_blank">LinkedIn</a></li>
+        <li><a href="https://www.youtube.com/@InterMarkDigitalAgency" target="_blank">YouTube</a></li>
+        <li><a href="https://www.intermarkdigitalagency.com">Website</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="ft-bottom">
+    <span>© 2026 InterMark Digital Agency · India</span>
+    <span>intermarkdigitalagency.com</span>
+  </div>
+</footer>
+
+<script>
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'});
+function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing)}
+animRing();
+document.querySelectorAll('a,button,.svc-row,.work-card,.pkg,.t-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cursor.style.width='20px';cursor.style.height='20px';ring.style.width='60px';ring.style.height='60px';ring.style.borderColor='rgba(200,255,0,.6)'});
+  el.addEventListener('mouseleave',()=>{cursor.style.width='12px';cursor.style.height='12px';ring.style.width='40px';ring.style.height='40px';ring.style.borderColor='rgba(200,255,0,.4)'});
+});
+</script>
+</body>
+</html>
