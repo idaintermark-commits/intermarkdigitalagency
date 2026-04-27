@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Website Design & Development — InterMark Digital Performance Agency</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Epilogue:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--black:#080808;--white:#F5F5F0;--lime:#C8FF00;--lime-dark:#A8D900;--grey:#1A1A1A;--grey-2:#242424;--muted:#888;--border:rgba(245,245,240,0.08);--border-light:rgba(245,245,240,0.15)}
+html{scroll-behavior:smooth}
+body{font-family:'Epilogue',sans-serif;background:var(--black);color:var(--white);line-height:1.6;overflow-x:hidden;cursor:none}
+.cursor{width:12px;height:12px;background:var(--lime);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s;mix-blend-mode:difference}
+.cursor-ring{width:40px;height:40px;border:1px solid rgba(200,255,0,.4);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s,border-color .3s}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;padding:1.4rem 3rem;display:flex;align-items:center;justify-content:space-between;z-index:100;border-bottom:1px solid var(--border);background:rgba(8,8,8,0.92);backdrop-filter:blur(20px)}
+.nav-center{display:flex;gap:2.8rem;list-style:none;position:absolute;left:50%;transform:translateX(-50%)}
+.nav-center a{color:var(--muted);text-decoration:none;font-size:.78rem;font-weight:500;letter-spacing:.8px;text-transform:uppercase;transition:color .2s}
+.nav-center a:hover{color:var(--white)}
+.nav-cta{font-family:'Syne',sans-serif;background:var(--lime);color:var(--black);padding:.55rem 1.4rem;border-radius:2px;text-decoration:none;font-size:.75rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;transition:all .2s}
+.nav-cta:hover{background:var(--lime-dark)}
+
+/* HERO */
+.hero{min-height:90vh;padding:12rem 3rem 6rem;border-bottom:1px solid var(--border);position:relative;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.hero-grid-line{position:absolute;top:0;bottom:0;width:1px;background:var(--border)}
+.hero-grid-line:nth-child(1){left:25%}.hero-grid-line:nth-child(2){left:50%}.hero-grid-line:nth-child(3){left:75%}
+.hero-left{position:relative;z-index:1}
+.h-tag{font-family:'Syne',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--lime);margin-bottom:1.2rem;display:flex;align-items:center;gap:10px}
+.h-tag::before{content:'';width:30px;height:1.5px;background:var(--lime);display:block}
+.h-title{font-family:'Syne',sans-serif;font-size:clamp(2.5rem,6vw,6rem);font-weight:800;line-height:.92;letter-spacing:-3px;text-transform:uppercase;margin-bottom:1.8rem}
+.h-title span{color:var(--lime)}
+.h-desc{font-size:1rem;color:var(--muted);line-height:1.85;font-weight:300;max-width:420px;margin-bottom:2.5rem;font-style:italic}
+.btn-lime{font-family:'Syne',sans-serif;background:var(--lime);color:var(--black);padding:1rem 2.5rem;border-radius:2px;text-decoration:none;font-weight:700;font-size:.85rem;letter-spacing:1px;text-transform:uppercase;transition:all .25s;display:inline-flex;align-items:center;gap:10px}
+.btn-lime:hover{background:var(--lime-dark);transform:translateY(-3px);box-shadow:0 16px 40px rgba(200,255,0,.2)}
+.hero-right{position:relative;z-index:1}
+.hero-img{width:100%;border-radius:4px;border:1px solid var(--border);display:block}
+.hero-img-placeholder{width:100%;height:420px;background:var(--grey);border:1px solid var(--border);border-radius:4px;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--muted)}
+
+/* SECTION SHARED */
+.sec-label{font-family:'Syne',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;color:var(--lime);margin-bottom:.8rem}
+.sec-title{font-family:'Syne',sans-serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:800;letter-spacing:-2px;text-transform:uppercase;line-height:1}
+.sec-desc{font-size:.95rem;color:var(--muted);max-width:380px;line-height:1.75;font-weight:300;font-style:italic;text-align:right}
+.sec-header{padding:5rem 3rem 3rem;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:flex-end;gap:3rem;flex-wrap:wrap}
+
+/* WHAT WE DELIVER */
+.delivers{border-bottom:1px solid var(--border)}
+.deliver-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+.deliver-item{padding:2.5rem;border-right:1px solid var(--border);border-bottom:1px solid var(--border);transition:background .25s}
+.deliver-item:nth-child(4n){border-right:none}
+.deliver-item:nth-child(5),.deliver-item:nth-child(6),.deliver-item:nth-child(7),.deliver-item:nth-child(8){border-bottom:none}
+.deliver-item:hover{background:var(--grey)}
+.deliver-num{font-family:'Syne',sans-serif;font-size:2.5rem;font-weight:800;color:var(--grey-2);line-height:1;margin-bottom:1rem;letter-spacing:-2px}
+.deliver-title{font-family:'Syne',sans-serif;font-size:.92rem;font-weight:700;text-transform:uppercase;letter-spacing:-.2px;color:var(--white);margin-bottom:.5rem}
+.deliver-body{font-size:.8rem;color:var(--muted);line-height:1.65;font-weight:300}
+
+/* WHAT SETS US APART */
+.apart{border-bottom:1px solid var(--border);background:var(--grey)}
+.apart-grid{display:grid;grid-template-columns:repeat(3,1fr)}
+.apart-item{padding:3rem;border-right:1px solid var(--border);position:relative;overflow:hidden;transition:all .25s}
+.apart-item::before{content:'';position:absolute;left:0;top:0;bottom:0;width:0;background:var(--lime);transition:width .3s}
+.apart-item:hover::before{width:4px}
+.apart-item:hover{padding-left:3.5rem}
+.apart-item:last-child{border-right:none}
+.apart-icon{font-size:2rem;margin-bottom:1.2rem;display:block}
+.apart-title{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;text-transform:uppercase;color:var(--white);margin-bottom:.6rem}
+.apart-body{font-size:.84rem;color:var(--muted);line-height:1.7;font-weight:300}
+
+/* WHO ITS FOR */
+.forwhom{border-bottom:1px solid var(--border)}
+.forwhom-grid{display:grid;grid-template-columns:repeat(5,1fr)}
+.fw-item{padding:2.5rem 2rem;border-right:1px solid var(--border);transition:all .25s;text-align:center}
+.fw-item:last-child{border-right:none}
+.fw-item:hover{background:var(--grey)}
+.fw-icon{font-size:2rem;margin-bottom:1rem;display:block}
+.fw-title{font-family:'Syne',sans-serif;font-size:.82rem;font-weight:700;text-transform:uppercase;letter-spacing:-.2px;color:var(--white);margin-bottom:.4rem}
+.fw-desc{font-size:.75rem;color:var(--muted);line-height:1.55;font-weight:300}
+
+/* OUR WORK */
+.our-work{border-bottom:1px solid var(--border)}
+.work-grid{display:grid;grid-template-columns:repeat(3,1fr)}
+.work-card{border-right:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;transition:all .3s;text-decoration:none}
+.work-card:nth-child(3n){border-right:none}
+.work-card:nth-child(6),.work-card:nth-child(7){border-bottom:none}
+.work-card:hover{background:var(--grey)}
+.work-img{width:100%;height:200px;object-fit:cover;object-position:top;display:block;filter:brightness(.85);transition:filter .3s}
+.work-card:hover .work-img{filter:brightness(1)}
+.work-img-placeholder{width:100%;height:200px;background:var(--grey-2);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--muted)}
+.work-body{padding:1.5rem 2rem 2rem}
+.work-sector{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:var(--lime);margin-bottom:.4rem}
+.work-card h3{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:800;color:var(--white);text-transform:uppercase;letter-spacing:-.3px;margin-bottom:.5rem}
+.work-url{font-size:.75rem;color:var(--muted);font-weight:300;display:flex;align-items:center;gap:5px}
+.work-url::before{content:'↗';color:var(--lime);font-size:.8rem}
+
+/* LOGOS ROW */
+.logos-row{padding:3rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center;gap:3rem;flex-wrap:wrap;background:var(--grey)}
+.client-logo{height:40px;width:auto;opacity:.6;transition:opacity .2s;filter:brightness(10)}
+.client-logo:hover{opacity:1}
+
+/* PROCESS */
+.process{border-bottom:1px solid var(--border)}
+.process-list{}
+.process-row{display:flex;align-items:flex-start;gap:3rem;padding:2.5rem 3rem;border-bottom:1px solid var(--border);transition:all .25s;position:relative;overflow:hidden}
+.process-row::before{content:'';position:absolute;left:0;top:0;bottom:0;width:0;background:var(--lime);transition:width .3s}
+.process-row:hover::before{width:4px}
+.process-row:hover{background:var(--grey);padding-left:3.5rem}
+.process-row:last-child{border-bottom:none}
+.process-num{font-family:'Syne',sans-serif;font-size:3rem;font-weight:800;color:var(--grey-2);line-height:1;flex-shrink:0;width:80px;transition:color .25s}
+.process-row:hover .process-num{color:var(--lime)}
+.process-content{}
+.process-title{font-family:'Syne',sans-serif;font-size:1.1rem;font-weight:700;text-transform:uppercase;color:var(--white);margin-bottom:.4rem;letter-spacing:-.3px}
+.process-body{font-size:.86rem;color:var(--muted);line-height:1.7;font-weight:300}
+
+/* FAQ */
+.faq{border-bottom:1px solid var(--border)}
+.faq-list{}
+.faq-item{border-bottom:1px solid var(--border);transition:background .25s}
+.faq-item:last-child{border-bottom:none}
+.faq-item:hover{background:var(--grey)}
+.faq-q{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;text-transform:uppercase;letter-spacing:-.3px;color:var(--white);padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+.faq-q::after{content:'↓';color:var(--lime);font-size:1rem;transition:transform .3s}
+.faq-item.open .faq-q::after{transform:rotate(180deg)}
+.faq-a{font-size:.88rem;color:var(--muted);line-height:1.8;font-weight:300;padding:0 3rem 2rem;display:none}
+.faq-item.open .faq-a{display:block}
+
+/* CTA */
+.cta-block{padding:8rem 3rem;text-align:center;position:relative;overflow:hidden}
+.cta-bg-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Syne',sans-serif;font-size:22vw;font-weight:800;color:var(--grey);white-space:nowrap;pointer-events:none;letter-spacing:-8px;text-transform:uppercase;line-height:1}
+.cta-block h2{font-family:'Syne',sans-serif;font-size:clamp(2.5rem,6vw,6rem);font-weight:800;text-transform:uppercase;letter-spacing:-3px;line-height:.95;margin-bottom:1.5rem;position:relative;z-index:1}
+.cta-block h2 span{color:var(--lime)}
+.cta-block p{font-size:1rem;color:var(--muted);max-width:420px;margin:0 auto 3rem;line-height:1.75;font-weight:300;font-style:italic;position:relative;z-index:1}
+
+/* FOOTER */
+footer{padding:2.5rem 3rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.ft-logo{font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;color:var(--white);text-transform:uppercase;letter-spacing:-.3px}
+.ft-logo span{color:var(--lime)}
+.ft-copy{font-size:.72rem;color:var(--muted);letter-spacing:.5px;text-transform:uppercase}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav{padding:1rem 1.5rem}.nav-center{display:none}
+  .hero{grid-template-columns:1fr;padding:9rem 1.5rem 3rem;min-height:auto}
+  .hero-right{display:none}
+  .h-title{letter-spacing:-2px}
+  .deliver-grid{grid-template-columns:repeat(2,1fr)}
+  .deliver-item:nth-child(2n){border-right:none}
+  .deliver-item:nth-child(5),.deliver-item:nth-child(6){border-bottom:1px solid var(--border)}
+  .apart-grid{grid-template-columns:1fr}
+  .apart-item{border-right:none;border-bottom:1px solid var(--border)}
+  .forwhom-grid{grid-template-columns:repeat(2,1fr)}
+  .fw-item:nth-child(2n){border-right:none}
+  .work-grid{grid-template-columns:1fr}
+  .work-card{border-right:none}
+  .sec-header{flex-direction:column;align-items:flex-start;padding:3rem 1.5rem}
+  .sec-desc{text-align:left}
+  .process-row{padding:2rem 1.5rem;gap:1.5rem}
+  .faq-q{padding:1.5rem}
+  .faq-a{padding:0 1.5rem 1.5rem}
+  .cta-block{padding:5rem 1.5rem}
+  footer{padding:2rem 1.5rem}
+  .logos-row{padding:2rem 1.5rem;gap:1.5rem}
+}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="index.html"><img src="ida-logo.png" alt="InterMark" style="height:96px;width:auto;display:block;background:#C8FF00;padding:5px 8px;border-radius:3px;"></a>
+  <ul class="nav-center">
+    <li><a href="index.html#services">Services</a></li>
+    <li><a href="index.html#work">Work</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="contact.html" class="nav-cta">Get Started →</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-grid-line"></div>
+  <div class="hero-grid-line"></div>
+  <div class="hero-grid-line"></div>
+  <div class="hero-left">
+    <div class="h-tag">Website Design & Development</div>
+    <h1 class="h-title">Websites That<br>Work As Hard<br>As <span>You Do.</span></h1>
+    <p class="h-desc">Your website is your digital storefront — where first impressions are formed and business goals are realized. We build fast, professional, conversion-focused websites with Meta & Google integration from day one.</p>
+    <a href="contact.html" class="btn-lime">Get a Free Consultation →</a>
+  </div>
+  <div class="hero-right">
+    <img src="web-hero.png" alt="Website Design by InterMark" class="hero-img" onerror="this.style.display='none'">
+  </div>
+</section>
+
+<!-- WHAT WE DELIVER -->
+<div class="delivers">
+  <div class="sec-header">
+    <div>
+      <div class="sec-label">What's Included</div>
+      <h2 class="sec-title">Everything<br>In One Build.</h2>
+    </div>
+    <p class="sec-desc">No extras, no hidden costs — every website we build comes fully loaded from day one.</p>
+  </div>
+  <div class="deliver-grid">
+    <div class="deliver-item"><div class="deliver-num">01</div><div class="deliver-title">Custom Design</div><p class="deliver-body">Designed from scratch to match your brand identity. No generic templates, no shortcuts — every page built for your business.</p></div>
+    <div class="deliver-item"><div class="deliver-num">02</div><div class="deliver-title">Mobile Responsive</div><p class="deliver-body">Looks and works perfectly on every device — phone, tablet, desktop. Your customers browse on mobile. We make sure they stay.</p></div>
+    <div class="deliver-item"><div class="deliver-num">03</div><div class="deliver-title">Meta Integration</div><p class="deliver-body">Facebook Pixel and Instagram connected from day one — so when you're ready to run ads, everything is already in place.</p></div>
+    <div class="deliver-item"><div class="deliver-num">04</div><div class="deliver-title">Google Integration</div><p class="deliver-body">Google Analytics, Search Console, and Google Business Profile all connected — so you can track performance from launch.</p></div>
+    <div class="deliver-item"><div class="deliver-num">05</div><div class="deliver-title">SEO Foundation</div><p class="deliver-body">Page titles, meta descriptions, site structure — all optimised for search from the start. Your website should be found, not hidden.</p></div>
+    <div class="deliver-item"><div class="deliver-num">06</div><div class="deliver-title">Fast Loading</div><p class="deliver-body">Optimised for speed because slow websites lose customers. Every second counts — we make sure yours loads fast.</p></div>
+    <div class="deliver-item"><div class="deliver-num">07</div><div class="deliver-title">Contact & Enquiry Forms</div><p class="deliver-body">So customers can reach you directly from your website — no friction, no barriers between them and your business.</p></div>
+    <div class="deliver-item"><div class="deliver-num">08</div><div class="deliver-title">Social Media Links</div><p class="deliver-body">All your social profiles connected and accessible — Instagram, Facebook, LinkedIn, YouTube. One seamless digital presence.</p></div>
+  </div>
+</div>
+
+<!-- WHAT SETS US APART -->
+<div class="apart">
+  <div class="sec-header">
+    <div>
+      <div class="sec-label">Why InterMark</div>
+      <h2 class="sec-title">What Sets<br>Us Apart.</h2>
+    </div>
+    <p class="sec-desc">Anyone can build a website. We build websites that perform, convert, and grow with your business.</p>
+  </div>
+  <div class="apart-grid">
+    <div class="apart-item">
+      <span class="apart-icon">🎨</span>
+      <div class="apart-title">Custom, Stunning Design</div>
+      <p class="apart-body">We craft visually striking, responsive websites tailored to your brand — not copied from a template library. Every element is intentional, every page is designed to convert.</p>
+    </div>
+    <div class="apart-item">
+      <span class="apart-icon">⚡</span>
+      <div class="apart-title">SEO & Speed Optimised</div>
+      <p class="apart-body">Every site is designed for top search engine rankings and lightning-fast performance. Better visibility, better user experience, better results — from the moment you go live.</p>
+    </div>
+    <div class="apart-item">
+      <span class="apart-icon">🤝</span>
+      <div class="apart-title">Collaborative Approach</div>
+      <p class="apart-body">We partner with you through every step — from the first brief to launch day and beyond. Your goals drive every decision we make. Ongoing support included.</p>
+    </div>
+  </div>
+</div>
+
+<!-- WHO IT'S FOR -->
+<div class="forwhom">
+  <div class="sec-header">
+    <div>
+      <div class="sec-label">Built For</div>
+      <h2 class="sec-title">Who We<br>Build For.</h2>
+    </div>
+    <p class="sec-desc">Every business type has different needs. We understand them all.</p>
+  </div>
+  <div class="forwhom-grid">
+    <div class="fw-item">
+      <span class="fw-icon">🍽️</span>
+      <div class="fw-title">Restaurants & Cafes</div>
+      <p class="fw-desc">Menus, location, hours, reservations — everything a customer needs to choose you.</p>
+    </div>
+    <div class="fw-item">
+      <span class="fw-icon">⚖️</span>
+      <div class="fw-title">Lawyers & CAs</div>
+      <p class="fw-desc">Credentials, services, consultation booking — building the trust that wins clients.</p>
+    </div>
+    <div class="fw-item">
+      <span class="fw-icon">🏥</span>
+      <div class="fw-title">Doctors & Clinics</div>
+      <p class="fw-desc">Specialisations, timings, appointment booking — turning online searches into patients.</p>
+    </div>
+    <div class="fw-item">
+      <span class="fw-icon">🏨</span>
+      <div class="fw-title">Hotels & Hospitality</div>
+      <p class="fw-desc">Rooms, amenities, booking enquiries — showcasing your property at its best.</p>
+    </div>
+    <div class="fw-item">
+      <span class="fw-icon">🏢</span>
+      <div class="fw-title">Real Estate & Marketing</div>
+      <p class="fw-desc">Listings, portfolio, lead generation — converting visitors into qualified prospects.</p>
+    </div>
+  </div>
+</div>
+
+<!-- OUR WORK -->
+<div class="our-work">
+  <div class="sec-header">
+    <div>
+      <div class="sec-label">Real Examples</div>
+      <h2 class="sec-title">Websites<br>We've Built.</h2>
+    </div>
+    <p class="sec-desc">Seven businesses — taken from zero online presence to fully live, professional websites.</p>
+  </div>
+
+  <!-- LOGOS ROW -->
+  <div class="logos-row">
+    <img src="kytes-logo.png" alt="Kytes" class="client-logo">
+    <img src="doon-logo.png" alt="Doon Anandam" class="client-logo">
+    <img src="gothic-logo.png" alt="Gothic Grill" class="client-logo">
+    <img src="elite-logo.png" alt="Elite Hospitality" class="client-logo">
+    <img src="drjain-logo.png" alt="Dr. Rohit Jain" class="client-logo">
+    <img src="sohan-logo.png" alt="Advocate Sohan Lal" class="client-logo">
+    <img src="priya-logo.png" alt="CA Priya Poddar" class="client-logo">
+  </div>
+
+  <div class="work-grid">
+    <div class="work-card">
+      <img src="kytes-website.png" alt="Kytes Restaurant Website" class="work-img" onerror="this.outerHTML='<div class=work-img-placeholder>Kytes Restaurant</div>'">
+      <div class="work-body">
+        <div class="work-sector">F&B · Restaurant</div>
+        <h3>Kytes Restaurant</h3>
+        <div class="work-url">Live Website</div>
+      </div>
+    </div>
+    <div class="work-card">
+      <img src="doon-website.png" alt="Doon Anandam Website" class="work-img" onerror="this.outerHTML='<div class=work-img-placeholder>Doon Anandam</div>'">
+      <div class="work-body">
+        <div class="work-sector">Hospitality · Wellness</div>
+        <h3>Doon Anandam</h3>
+        <div class="work-url">Live Website</div>
+      </div>
+    </div>
+    <div class="work-card">
+      <img src="gothic-website.png" alt="Gothic Grill Website" class="work-img" onerror="this.outerHTML='<div class=work-img-placeholder>Gothic Grill</div>'">
+      <div class="work-body">
+        <div class="work-sector">F&B · Restaurant</div>
+        <h3>Gothic Grill</h3>
+        <div class="work-url">Live Website</div>
+      </div>
+    </div>
+    <div class="work-card">
+      <img src="elite-website.png" alt="Elite Hospitality Website" class="work-img" onerror="this.outerHTML='<div class=work-img-placeholder>Elite Hospitality</div>'">
+      <div class="work-body">
+        <div class="work-sector">Real Estate · Hotels</div>
+        <h3>Elite Hospitality</h3>
+        <div class="work-url">Live Website</div>
+      </div>
+    </div>
+    <div class="work-card">
+      <img src="drjain-website.png" alt="Dr. Rohit Jain Website" class="work-img" onerror="this.outerHTML='<div class=work-img-placeholder>Dr. Rohit Jain</div>'">
+      <div class="work-body">
+        <div class="work-sector">Healthcare · Medical</div>
+        <h3>Dr. Rohit Jain</h3>
+        <div class="work-url">Live Website</div>
+      </div>
+    </div>
+    <div class="work-card">
+      <img src="sohan-website.png" alt="Advocate Sohan Lal Website" class="work-img" onerror="this.outerHTML='<div class=work-img-placeholder>Advocate Sohan Lal</div>'">
+      <div class="work-body">
+        <div class="work-sector">Corporate Law · Legal</div>
+        <h3>Advocate Sohan Lal</h3>
+        <div class="work-url">Live Website</div>
+      </div>
+    </div>
+    <div class="work-card">
+      <img src="priya-website.png" alt="CA Priya Poddar Website" class="work-img" onerror="this.outerHTML='<div class=work-img-placeholder>CA Priya Poddar</div>'">
+      <div class="work-body">
+        <div class="work-sector">Finance · Chartered Accountant</div>
+        <h3>CA Ms. Priya Poddar</h3>
+        <div class="work-url">Live Website</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROCESS -->
+<div class="process">
+  <div class="sec-header">
+    <div>
+      <div class="sec-label">How It Works</div>
+      <h2 class="sec-title">From Brief<br>to Live.</h2>
+    </div>
+    <p class="sec-desc">A simple, transparent process — you always know exactly where we are.</p>
+  </div>
+  <div class="process-list">
+    <div class="process-row">
+      <div class="process-num">01</div>
+      <div class="process-content">
+        <div class="process-title">Discovery Call</div>
+        <p class="process-body">We start by understanding your business, your customers, and your goals. No assumptions — we ask the right questions so we can build the right website.</p>
+      </div>
+    </div>
+    <div class="process-row">
+      <div class="process-num">02</div>
+      <div class="process-content">
+        <div class="process-title">Design Direction</div>
+        <p class="process-body">We present a design direction aligned to your brand identity — colours, fonts, layout, tone. You approve before we build a single page.</p>
+      </div>
+    </div>
+    <div class="process-row">
+      <div class="process-num">03</div>
+      <div class="process-content">
+        <div class="process-title">Full Build</div>
+        <p class="process-body">We build the complete website — all pages, all integrations, all forms. Meta Pixel, Google Analytics, GBP — everything connected and tested.</p>
+      </div>
+    </div>
+    <div class="process-row">
+      <div class="process-num">04</div>
+      <div class="process-content">
+        <div class="process-title">Review & Revise</div>
+        <p class="process-body">You review the complete website and we make your requested changes. We don't launch until you're completely satisfied with every detail.</p>
+      </div>
+    </div>
+    <div class="process-row">
+      <div class="process-num">05</div>
+      <div class="process-content">
+        <div class="process-title">Launch</div>
+        <p class="process-body">Your website goes live — fully tested, fully connected, fully optimised. We stay on hand for the first 48 hours to ensure everything runs smoothly.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ -->
+<div class="faq">
+  <div class="sec-header">
+    <div>
+      <div class="sec-label">FAQ</div>
+      <h2 class="sec-title">Common<br>Questions.</h2>
+    </div>
+    <p class="sec-desc">Everything you need to know before getting started.</p>
+  </div>
+  <div class="faq-list">
+    <div class="faq-item">
+      <div class="faq-q">Will my website be mobile-friendly and SEO-optimised?</div>
+      <div class="faq-a">Absolutely. Every website we build is fully responsive — meaning it looks and works perfectly on phones, tablets, and desktops. SEO foundations are built in from the start — page titles, meta descriptions, site structure, and speed optimisation are all included as standard.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Do you offer ongoing support after the website is launched?</div>
+      <div class="faq-a">Yes. We provide maintenance, updates, and support after launch. We're a long-term partner, not a one-time vendor. If something needs updating — new menu, new team member, new service — we're here to handle it.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How do you ensure my website aligns with my brand?</div>
+      <div class="faq-a">We collaborate closely with you at every stage. Before we build anything, we get a thorough understanding of your brand — your colours, your tone, your audience, your goals. Everything we design is reviewed and approved by you before it goes live.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">How long does it take to build a website?</div>
+      <div class="faq-a">Typically 1–3 weeks depending on the complexity of the site and how quickly content and feedback is provided. We move fast — but we never cut corners. You'll always have a clear timeline from day one.</div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-q">Do I need to provide content and images?</div>
+      <div class="faq-a">We can work with whatever you have. If you have photos and content ready, we'll use them. If not, we can help you structure the content and guide you on what's needed. We also offer basic copywriting as part of our broader service packages.</div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-block">
+  <div class="cta-bg-text">WEB</div>
+  <h2>Ready for a Website<br>That <span>Performs?</span></h2>
+  <p>Book a free strategy call — no pitch decks, no pressure. Just a direct conversation about your business and what you need.</p>
+  <a href="contact.html" class="btn-lime">Book Free Strategy Call →</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-logo">Inter<span>Mark</span></div>
+  <div class="ft-copy">© 2026 InterMark Digital Agency · India</div>
+</footer>
+
+<script>
+const cursor=document.getElementById('cursor');
+const ring=document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'});
+function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing)}
+animRing();
+// FAQ accordion
+document.querySelectorAll('.faq-q').forEach(q=>{
+  q.addEventListener('click',()=>{
+    const item=q.parentElement;
+    const isOpen=item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+    if(!isOpen)item.classList.add('open');
+  });
+});
+document.querySelectorAll('a,button,.deliver-item,.apart-item,.fw-item,.work-card,.process-row,.faq-item').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cursor.style.width='20px';cursor.style.height='20px';ring.style.width='60px';ring.style.height='60px';ring.style.borderColor='rgba(200,255,0,.6)'});
+  el.addEventListener('mouseleave',()=>{cursor.style.width='12px';cursor.style.height='12px';ring.style.width='40px';ring.style.height='40px';ring.style.borderColor='rgba(200,255,0,.4)'});
+});
+</script>
+</body>
+</html>
